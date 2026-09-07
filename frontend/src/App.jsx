@@ -15,9 +15,9 @@ import DriverApp from './pages/DriverApp';
  */
 function AdminLayout() {
   return (
-    <div className="flex min-h-screen bg-[#080C14] text-slate-100 font-sans selection:bg-indigo-600 selection:text-white">
+    <div className="flex min-h-screen bg-[#F8FAFC] text-slate-900 font-sans selection:bg-indigo-600 selection:text-white">
       <Sidebar />
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto bg-[#080C14]">
+      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto bg-[#F8FAFC]">
         <Outlet />
       </div>
     </div>

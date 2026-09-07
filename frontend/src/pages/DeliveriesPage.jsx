@@ -136,7 +136,7 @@ export default function DeliveriesPage() {
   const urgentOrders = orders.filter(o => o.priority === 3).length;
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-[#080C14] text-slate-100">
+    <div className="flex-1 flex flex-col min-h-screen bg-[#F8FAFC] text-slate-900">
       <Topbar
         title="Delivery Order Management"
         subtitle="Manage customer consignments, dimensional constraints, and priorities"
@@ -145,7 +145,7 @@ export default function DeliveriesPage() {
         actions={
           <button
             onClick={handleOpenAddModal}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-md shadow-indigo-600/20 transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Add Consignment</span>
@@ -198,25 +198,25 @@ export default function DeliveriesPage() {
 
       {/* Add / Edit Delivery Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-150">
-          <div className="bg-[#0C1322] rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-700 text-slate-100">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-in fade-in duration-150">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 text-slate-900">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
               <div>
-                <h3 className="font-black text-white text-lg tracking-tight">
+                <h3 className="font-black text-slate-900 text-lg tracking-tight">
                   {editingOrder ? 'Edit Consignment' : 'New Delivery Consignment'}
                 </h3>
-                <p className="text-xs text-slate-400">Specify package weight, volume, and coordinates</p>
+                <p className="text-xs text-slate-500">Specify package weight, volume, and coordinates</p>
               </div>
               <button
                 onClick={() => setModalOpen(false)}
-                className="text-slate-400 hover:text-white p-1 rounded-xl hover:bg-slate-800 transition-colors cursor-pointer"
+                className="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {error && (
-              <div className="mt-4 p-3 bg-rose-500/10 border border-rose-500/30 text-rose-300 rounded-xl text-xs flex items-center gap-2">
+              <div className="mt-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{error}</span>
               </div>
@@ -224,32 +224,32 @@ export default function DeliveriesPage() {
 
             <form onSubmit={handleSubmit} className="mt-4 space-y-3.5 text-xs">
               <div>
-                <label className="block text-slate-300 font-bold mb-1">Customer / Organization Name</label>
+                <label className="block text-slate-700 font-bold mb-1">Customer / Organization Name</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Cisco Systems Campus Gate 2"
                   value={formData.customer}
                   onChange={(e) => setFormData({ ...formData, customer: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-[#080E1A] border border-slate-700/80 rounded-xl text-white focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
                 />
               </div>
 
               <div>
-                <label className="block text-slate-300 font-bold mb-1">Delivery Destination Address</label>
+                <label className="block text-slate-700 font-bold mb-1">Delivery Destination Address</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Outer Ring Road, Marathahalli, Bengaluru"
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-[#080E1A] border border-slate-700/80 rounded-xl text-white focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-hidden focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-300 font-bold mb-1">Weight (kg)</label>
+                  <label className="block text-slate-700 font-bold mb-1">Weight (kg)</label>
                   <input
                     type="number"
                     min="0.1"
@@ -257,11 +257,11 @@ export default function DeliveriesPage() {
                     required
                     value={formData.weightKg}
                     onChange={(e) => setFormData({ ...formData, weightKg: Number(e.target.value) })}
-                    className="w-full px-3.5 py-2.5 bg-[#080E1A] border border-slate-700/80 rounded-xl text-white"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-300 font-bold mb-1">Volume (m³)</label>
+                  <label className="block text-slate-700 font-bold mb-1">Volume (m³)</label>
                   <input
                     type="number"
                     min="0.01"
@@ -269,18 +269,18 @@ export default function DeliveriesPage() {
                     required
                     value={formData.volumeM3}
                     onChange={(e) => setFormData({ ...formData, volumeM3: Number(e.target.value) })}
-                    className="w-full px-3.5 py-2.5 bg-[#080E1A] border border-slate-700/80 rounded-xl text-white"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-300 font-bold mb-1">Package Category</label>
+                  <label className="block text-slate-700 font-bold mb-1">Package Category</label>
                   <select
                     value={formData.packageType}
                     onChange={(e) => setFormData({ ...formData, packageType: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-[#080E1A] border border-slate-700/80 rounded-xl text-white font-medium cursor-pointer"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-medium cursor-pointer"
                   >
                     <option value="small_parcel">Small Parcel</option>
                     <option value="electronics">Electronics</option>
@@ -291,11 +291,11 @@ export default function DeliveriesPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-slate-300 font-bold mb-1">Priority Tier</label>
+                  <label className="block text-slate-700 font-bold mb-1">Priority Tier</label>
                   <select
                     value={formData.priority}
                     onChange={(e) => setFormData({ ...formData, priority: Number(e.target.value) })}
-                    className="w-full px-3.5 py-2.5 bg-[#080E1A] border border-slate-700/80 rounded-xl text-white font-medium cursor-pointer"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-medium cursor-pointer"
                   >
                     <option value={1}>Tier 1 (Standard)</option>
                     <option value={2}>Tier 2 (Medium)</option>
@@ -306,40 +306,40 @@ export default function DeliveriesPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-300 font-bold mb-1">GPS Latitude</label>
+                  <label className="block text-slate-700 font-bold mb-1">GPS Latitude</label>
                   <input
                     type="number"
                     step="0.0001"
                     required
                     value={formData.lat}
                     onChange={(e) => setFormData({ ...formData, lat: Number(e.target.value) })}
-                    className="w-full px-3.5 py-2.5 bg-[#080E1A] border border-slate-700/80 rounded-xl text-white font-mono"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-mono"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-300 font-bold mb-1">GPS Longitude</label>
+                  <label className="block text-slate-700 font-bold mb-1">GPS Longitude</label>
                   <input
                     type="number"
                     step="0.0001"
                     required
                     value={formData.lng}
                     onChange={(e) => setFormData({ ...formData, lng: Number(e.target.value) })}
-                    className="w-full px-3.5 py-2.5 bg-[#080E1A] border border-slate-700/80 rounded-xl text-white font-mono"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-mono"
                   />
                 </div>
               </div>
 
-              <div className="pt-4 flex items-center justify-end gap-2.5 border-t border-slate-800">
+              <div className="pt-4 flex items-center justify-end gap-2.5 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="px-4 py-2.5 border border-slate-700 rounded-xl text-slate-300 hover:bg-slate-800 font-bold cursor-pointer"
+                  className="px-4 py-2.5 border border-slate-200 rounded-xl text-slate-600 hover:bg-slate-100 font-bold cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white rounded-xl font-black shadow-lg shadow-indigo-600/30 cursor-pointer"
+                  className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-md shadow-indigo-600/20 cursor-pointer"
                 >
                   {editingOrder ? 'Update Consignment' : 'Save & Dispatch'}
                 </button>

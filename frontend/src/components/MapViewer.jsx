@@ -5,35 +5,35 @@
  * Renders:
  * - Central Logistics Depot (Yeshwanthpur)
  * - Customer Delivery Stops (color-coded by priority & delivered state)
- * - Live-moving GPS trucks with directional heading and beacon waves
+ * - Live-moving GPS trucks with directional heading
  * - Multi-truck closed-loop route polylines with interactive selection highlighting
- * - Dark Navigation (CartoDB Dark Matter) default tile layer with OpenStreetMap toggle
+ * - Standard OpenStreetMap tiles by default with CartoDB Dark toggle
  */
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { Layers, Compass, ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
+import { Layers } from 'lucide-react';
 
-// Vibrant neon palette for truck routes
+// Distinct palette for multi-truck routes
 const ROUTE_COLORS = [
-  '#6366F1', // Indigo (Truck 1)
-  '#06B6D4', // Cyan (Truck 2)
+  '#4F46E5', // Indigo (Truck 1)
+  '#0284C7', // Sky Blue (Truck 2)
   '#10B981', // Emerald (Truck 3)
-  '#F59E0B', // Amber (Truck 4)
-  '#A855F7', // Purple (Truck 5)
+  '#D97706', // Amber (Truck 4)
+  '#8B5CF6', // Purple (Truck 5)
   '#EC4899'  // Pink (Truck 6)
 ];
 
-// Custom Leaflet DivIcon Generators (Zero external image dependencies)
+// Custom Leaflet DivIcon Generators (Zero external PNG dependency)
 function createDepotIcon() {
   return L.divIcon({
     className: 'custom-depot-marker',
     html: `
       <div style="
         position: relative;
-        width: 44px;
-        height: 44px;
+        width: 40px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -43,32 +43,32 @@ function createDepotIcon() {
           inset: 0;
           border-radius: 12px;
           background: #F59E0B;
-          opacity: 0.25;
+          opacity: 0.3;
           animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
         "></div>
         <div style="
           position: relative;
-          background: linear-gradient(135deg, #1E1B4B 0%, #0F172A 100%);
+          background: #1E293B;
           color: #FCD34D;
-          width: 38px;
-          height: 38px;
+          width: 36px;
+          height: 36px;
           border-radius: 10px;
           border: 2px solid #F59E0B;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         ">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FCD34D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FCD34D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
             <polyline points="9 22 9 12 15 12 15 22"></polyline>
           </svg>
         </div>
       </div>
     `,
-    iconSize: [44, 44],
-    iconAnchor: [22, 22],
-    popupAnchor: [0, -22]
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [0, -20]
   });
 }
 
@@ -79,10 +79,8 @@ function createDeliveryIcon(order, index) {
     : order.priority === 3
     ? '#EF4444'
     : order.priority === 2
-    ? '#38BDF8'
+    ? '#3B82F6'
     : '#64748B';
-
-  const glowColor = isDelivered ? 'rgba(16, 185, 129, 0.4)' : order.priority === 3 ? 'rgba(239, 68, 68, 0.5)' : 'rgba(56, 189, 248, 0.3)';
 
   return L.divIcon({
     className: 'custom-delivery-marker',
@@ -93,14 +91,13 @@ function createDeliveryIcon(order, index) {
         width: 26px;
         height: 26px;
         border-radius: 50%;
-        border: 2px solid #0F172A;
+        border: 2px solid white;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 11px;
-        font-weight: 800;
-        box-shadow: 0 0 10px ${glowColor};
-        transition: transform 0.2s;
+        font-weight: 700;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
       ">
         ${isDelivered ? '✓' : index || '•'}
       </div>
@@ -111,7 +108,7 @@ function createDeliveryIcon(order, index) {
   });
 }
 
-function createTruckIcon(truck, telemetry, color = '#6366F1') {
+function createTruckIcon(truck, telemetry, color = '#4F46E5') {
   const heading = telemetry?.heading || 0;
   const isMoving = telemetry?.speedKmh > 0 || truck.status === 'in_transit';
 
@@ -120,8 +117,8 @@ function createTruckIcon(truck, telemetry, color = '#6366F1') {
     html: `
       <div style="
         position: relative;
-        width: 46px;
-        height: 46px;
+        width: 44px;
+        height: 44px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -132,23 +129,23 @@ function createTruckIcon(truck, telemetry, color = '#6366F1') {
             inset: 0;
             border-radius: 50%;
             background: ${color};
-            opacity: 0.35;
-            animation: ping 1.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+            opacity: 0.3;
+            animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
           "></div>
         ` : ''}
         <div style="
           position: relative;
-          background: linear-gradient(135deg, ${color} 0%, #0F172A 100%);
+          background: ${color};
           color: white;
-          width: 38px;
-          height: 38px;
+          width: 36px;
+          height: 36px;
           border-radius: 50%;
-          border: 2px solid #FFFFFF;
+          border: 2px solid white;
           display: flex;
           align-items: center;
           justify-content: center;
           transform: rotate(${heading}deg);
-          box-shadow: 0 0 16px ${color}80, 0 4px 10px rgba(0,0,0,0.5);
+          box-shadow: 0 4px 14px rgba(0,0,0,0.3);
           transition: transform 0.35s ease;
         ">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -160,9 +157,9 @@ function createTruckIcon(truck, telemetry, color = '#6366F1') {
         </div>
       </div>
     `,
-    iconSize: [46, 46],
-    iconAnchor: [23, 23],
-    popupAnchor: [0, -24]
+    iconSize: [44, 44],
+    iconAnchor: [22, 22],
+    popupAnchor: [0, -22]
   });
 }
 
@@ -171,7 +168,7 @@ function MapBoundsUpdater({ bounds }) {
   const map = useMap();
   useEffect(() => {
     if (bounds && bounds.length > 0) {
-      map.fitBounds(bounds, { padding: [45, 45], maxZoom: 14 });
+      map.fitBounds(bounds, { padding: [40, 40], maxZoom: 14 });
     }
   }, [bounds, map]);
   return null;
@@ -184,9 +181,9 @@ export default function MapViewer({
   trips = [],
   truckLocations = {},
   selectedTruckId = null,
-  height = '560px'
+  height = '540px'
 }) {
-  const [mapTheme, setMapTheme] = useState('dark'); // 'dark' | 'streets'
+  const [mapTheme, setMapTheme] = useState('streets'); // 'streets' | 'dark'
   const defaultCenter = [depot.lat, depot.lng];
 
   // Calculate bounding box for all points
@@ -231,17 +228,17 @@ export default function MapViewer({
   return (
     <div
       style={{ height }}
-      className="w-full relative rounded-2xl overflow-hidden shadow-2xl border border-slate-800 bg-[#0C121E]"
+      className="w-full relative rounded-2xl overflow-hidden shadow-xs border border-slate-200/80 bg-slate-100"
     >
-      {/* Map Control Overlays */}
+      {/* Map Theme Toggle */}
       <div className="absolute top-3 right-3 z-30 flex items-center gap-2">
         <button
-          onClick={() => setMapTheme(mapTheme === 'dark' ? 'streets' : 'dark')}
-          className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#0B1320]/90 backdrop-blur-md text-slate-200 border border-slate-700/80 hover:bg-[#15233B] shadow-lg flex items-center gap-1.5 transition-all cursor-pointer"
+          onClick={() => setMapTheme(mapTheme === 'streets' ? 'dark' : 'streets')}
+          className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/95 text-slate-700 border border-slate-200 hover:bg-slate-50 shadow-sm flex items-center gap-1.5 transition-all cursor-pointer"
           title="Toggle Navigation Map Theme"
         >
-          <Layers className="w-3.5 h-3.5 text-cyan-400" />
-          <span>{mapTheme === 'dark' ? 'Dark Radar' : 'Standard Street'}</span>
+          <Layers className="w-3.5 h-3.5 text-indigo-600" />
+          <span>{mapTheme === 'streets' ? 'Standard OpenStreetMap' : 'Dark Navigation'}</span>
         </button>
       </div>
 
@@ -251,15 +248,15 @@ export default function MapViewer({
         scrollWheelZoom={true}
         className="w-full h-full"
       >
-        {mapTheme === 'dark' ? (
+        {mapTheme === 'streets' ? (
           <TileLayer
-            attribution='&copy; <a href="https://carto.com/">CARTO</a>'
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
         ) : (
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://carto.com/">CARTO</a>'
+            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           />
         )}
 
@@ -269,20 +266,20 @@ export default function MapViewer({
         {depot && (
           <Marker position={[depot.lat, depot.lng]} icon={createDepotIcon()}>
             <Popup>
-              <div className="p-2 min-w-[210px] text-slate-100">
+              <div className="p-1 min-w-[210px]">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-amber-400 bg-amber-500/15 px-2 py-0.5 rounded border border-amber-500/30">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
                     CENTRAL DEPOT
                   </span>
-                  <span className="text-[10px] font-mono text-slate-400">HQ-BLR</span>
+                  <span className="text-[10px] font-mono text-slate-500">HQ-BLR</span>
                 </div>
-                <h4 className="font-bold text-white text-sm mt-1">{depot.name}</h4>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  GPS: {depot.lat.toFixed(4)}, {depot.lng.toFixed(4)}
+                <h4 className="font-bold text-slate-900 text-sm mt-1">{depot.name}</h4>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Coordinates: {depot.lat.toFixed(4)}, {depot.lng.toFixed(4)}
                 </p>
-                <div className="mt-2.5 pt-2 border-t border-slate-800 text-[11px] text-slate-300 flex justify-between">
+                <div className="mt-2.5 pt-2 border-t border-slate-100 text-[11px] text-slate-600 flex justify-between">
                   <span>CVRP Central Hub</span>
-                  <span className="text-emerald-400 font-semibold">Active Dispatch</span>
+                  <span className="text-emerald-600 font-semibold">Active Capacity</span>
                 </div>
               </div>
             </Popup>
@@ -299,37 +296,37 @@ export default function MapViewer({
               icon={createDeliveryIcon(order, idx + 1)}
             >
               <Popup>
-                <div className="p-2 min-w-[230px] text-slate-100">
-                  <div className="flex items-center justify-between gap-2 border-b border-slate-800 pb-1.5">
-                    <span className="font-mono text-xs font-bold text-cyan-400">
+                <div className="p-1 min-w-[220px]">
+                  <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-1.5">
+                    <span className="font-mono text-xs font-bold text-indigo-600">
                       {order.orderId || order.id}
                     </span>
                     <span
                       className={`text-[10px] px-2 py-0.5 rounded font-bold uppercase ${
                         order.status === 'delivered'
-                          ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                          : 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : 'bg-slate-100 text-slate-700'
                       }`}
                     >
                       {order.status || 'Pending'}
                     </span>
                   </div>
 
-                  <h4 className="font-bold text-white text-sm mt-2">{order.customer}</h4>
-                  <p className="text-xs text-slate-400 truncate mt-0.5">{order.address}</p>
+                  <h4 className="font-bold text-slate-900 text-sm mt-1.5">{order.customer}</h4>
+                  <p className="text-xs text-slate-500 truncate mt-0.5">{order.address}</p>
 
-                  <div className="mt-2.5 grid grid-cols-2 gap-1.5 text-[11px] bg-[#070C16] p-2 rounded-lg border border-slate-800">
+                  <div className="mt-2.5 grid grid-cols-2 gap-1.5 text-[11px] bg-slate-50 p-2 rounded-lg border border-slate-100">
                     <div>
-                      <span className="text-slate-500">Weight:</span> <strong className="text-slate-200">{order.weightKg} kg</strong>
+                      <span className="text-slate-400">Weight:</span> <strong className="text-slate-700">{order.weightKg} kg</strong>
                     </div>
                     <div>
-                      <span className="text-slate-500">Volume:</span> <strong className="text-slate-200">{order.volumeM3} m³</strong>
+                      <span className="text-slate-400">Volume:</span> <strong className="text-slate-700">{order.volumeM3} m³</strong>
                     </div>
                     <div>
-                      <span className="text-slate-500">Priority:</span> <strong className="text-amber-400">Tier {order.priority}</strong>
+                      <span className="text-slate-400">Priority:</span> <strong className="text-slate-700">Tier {order.priority}</strong>
                     </div>
                     <div>
-                      <span className="text-slate-500">Assigned:</span> <strong className="text-cyan-400 font-mono">{order.assignedTruckId || 'Unassigned'}</strong>
+                      <span className="text-slate-400">Assigned:</span> <strong className="text-indigo-600 font-mono">{order.assignedTruckId || 'Unassigned'}</strong>
                     </div>
                   </div>
                 </div>
@@ -350,34 +347,34 @@ export default function MapViewer({
               pathOptions={{
                 color: route.color,
                 weight: isSelected ? 6 : 4,
-                opacity: isOtherSelected ? 0.25 : 0.85,
-                dashArray: isSelected ? undefined : '7, 7'
+                opacity: isOtherSelected ? 0.3 : 0.85,
+                dashArray: isSelected ? undefined : '6, 6'
               }}
             >
               <Popup>
-                <div className="p-2 text-slate-100 min-w-[210px]">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-1.5">
+                <div className="p-1 min-w-[200px]">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-1.5">
                     <h5 className="font-bold text-sm" style={{ color: route.color }}>{route.truckName}</h5>
-                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">
                       {route.truckId}
                     </span>
                   </div>
                   <div className="mt-2 space-y-1 text-xs">
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Total Loop:</span>
-                      <strong className="text-white">{route.totalDistanceKm} km</strong>
+                      <span className="text-slate-500">Total Distance:</span>
+                      <strong className="text-slate-800">{route.totalDistanceKm} km</strong>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Total Payload:</span>
-                      <strong className="text-white">{route.totalWeightKg || 0} kg</strong>
+                      <span className="text-slate-500">Payload Load:</span>
+                      <strong className="text-slate-800">{route.totalWeightKg || 0} kg</strong>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Est. Duration:</span>
-                      <strong className="text-emerald-400">{route.estimatedDurationMinutes || 0} mins</strong>
+                      <span className="text-slate-500">Est. Duration:</span>
+                      <strong className="text-emerald-600 font-semibold">{route.estimatedDurationMinutes || 0} mins</strong>
                     </div>
                   </div>
-                  <p className="text-[10px] text-slate-500 mt-2 italic">
-                    Simulated Annealing Closed Loop (Depot ➔ Stops ➔ Depot)
+                  <p className="text-[10px] text-slate-400 mt-2 italic">
+                    Closed loop from Yeshwanthpur FC
                   </p>
                 </div>
               </Popup>
@@ -399,34 +396,34 @@ export default function MapViewer({
               icon={createTruckIcon(truck, telemetry, color)}
             >
               <Popup>
-                <div className="p-2 min-w-[220px] text-slate-100">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-1.5">
-                    <h4 className="font-bold text-sm text-white">{truck.name}</h4>
+                <div className="p-1 min-w-[210px]">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                    <h4 className="font-bold text-sm text-slate-900">{truck.name}</h4>
                     <span
                       className="text-[10px] px-2 py-0.5 rounded font-bold uppercase"
-                      style={{ backgroundColor: `${color}25`, color }}
+                      style={{ backgroundColor: `${color}20`, color }}
                     >
                       {truck.type}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-400 font-mono mt-1">{truck.truckId || truck.id}</p>
+                  <p className="text-xs text-slate-500 font-mono mt-0.5">{truck.truckId || truck.id}</p>
 
-                  <div className="mt-2.5 space-y-1.5 text-xs bg-[#070C16] p-2 rounded-lg border border-slate-800">
+                  <div className="mt-2 space-y-1 text-xs bg-slate-50 p-2 rounded-lg border border-slate-100">
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Live Telemetry:</span>
-                      <strong className="capitalize text-emerald-400">{telemetry.status || truck.status || 'Idle'}</strong>
+                      <span className="text-slate-500">Live Status:</span>
+                      <strong className="capitalize text-emerald-600">{telemetry.status || truck.status || 'Idle'}</strong>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Speed:</span>
-                      <strong className="text-cyan-400">{telemetry.speedKmh ? `${telemetry.speedKmh} km/h` : 'Stationary'}</strong>
+                      <span className="text-slate-500">Speed:</span>
+                      <strong className="text-indigo-600">{telemetry.speedKmh ? `${telemetry.speedKmh} km/h` : 'Stationary'}</strong>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Driver:</span>
-                      <strong className="text-slate-200">{truck.driver?.name || 'Staff Driver'}</strong>
+                      <span className="text-slate-500">Driver:</span>
+                      <strong className="text-slate-800">{truck.driver?.name || 'Staff Driver'}</strong>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Max Capacity:</span>
-                      <strong className="text-slate-200">{truck.maxWeightKg} kg / {truck.maxVolumeM3} m³</strong>
+                      <span className="text-slate-500">Max Capacity:</span>
+                      <strong className="text-slate-800">{truck.maxWeightKg} kg / {truck.maxVolumeM3} m³</strong>
                     </div>
                   </div>
                 </div>

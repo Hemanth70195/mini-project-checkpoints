@@ -47,7 +47,7 @@ export default function FleetPage() {
   }, []);
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-[#080C14] text-slate-100">
+    <div className="flex-1 flex flex-col min-h-screen bg-[#F8FAFC] text-slate-900">
       <Topbar
         title="Fleet Vehicle Hub"
         subtitle="Manage vehicle capacity limits, fuel efficiency profiles, and driver assignments"
@@ -59,10 +59,10 @@ export default function FleetPage() {
         {/* Hero Section: Central Prominent Truck Visualizer (Reference Image 6) */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
               Active Vehicle Telemetry & Inspection
             </h3>
-            <span className="text-xs font-mono text-cyan-400">Select any vehicle to inspect</span>
+            <span className="text-xs font-mono text-indigo-600 font-semibold">Select any vehicle to inspect</span>
           </div>
           <TruckVisualizer
             trucks={trucks}
@@ -75,7 +75,7 @@ export default function FleetPage() {
 
         {/* Fleet Cards Grid for all vehicles */}
         <div className="space-y-3">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
             Fleet Inventory & Load Distribution
           </h3>
 
@@ -95,66 +95,66 @@ export default function FleetPage() {
                 <div
                   key={truckId}
                   onClick={() => setSelectedTruckId(truckId)}
-                  className={`rounded-2xl p-5 border transition-all cursor-pointer flex flex-col justify-between shadow-xl ${
+                  className={`rounded-2xl p-5 border transition-all cursor-pointer flex flex-col justify-between shadow-xs ${
                     isSelected
-                      ? 'bg-indigo-950/40 border-indigo-500 ring-2 ring-indigo-500/20 shadow-indigo-950/40'
-                      : 'bg-[#0C1322] border-slate-800 hover:border-slate-700'
+                      ? 'bg-indigo-50/80 border-indigo-400 ring-2 ring-indigo-400/20 shadow-sm'
+                      : 'bg-white border-slate-200/80 hover:border-slate-300 hover:shadow-sm'
                   }`}
                 >
                   <div>
                     <div className="flex items-start justify-between">
                       <div>
-                        <span className="text-[10px] font-mono uppercase font-bold text-cyan-300 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/30">
+                        <span className="text-[10px] font-mono uppercase font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200/80">
                           {truckId}
                         </span>
-                        <h4 className="font-black text-white text-base mt-2">{truck.name}</h4>
+                        <h4 className="font-black text-slate-900 text-base mt-2">{truck.name}</h4>
                       </div>
                       <StatusBadge status={telemetry.status || truck.status || 'idle'} />
                     </div>
 
                     <div className="mt-4 space-y-2 text-xs">
-                      <div className="flex items-center justify-between text-slate-300">
+                      <div className="flex items-center justify-between text-slate-600">
                         <span className="flex items-center gap-1.5 text-slate-500">
-                          <Shield className="w-3.5 h-3.5 text-indigo-400" /> Class
+                          <Shield className="w-3.5 h-3.5 text-indigo-600" /> Class
                         </span>
                         <StatusBadge status={truck.type} type="truckType" />
                       </div>
 
-                      <div className="flex items-center justify-between text-slate-300">
+                      <div className="flex items-center justify-between text-slate-600">
                         <span className="flex items-center gap-1.5 text-slate-500">
-                          <User className="w-3.5 h-3.5 text-indigo-400" /> Driver
+                          <User className="w-3.5 h-3.5 text-indigo-600" /> Driver
                         </span>
-                        <span className="font-semibold text-white">{truck.driver?.name || 'Staff Driver'}</span>
+                        <span className="font-semibold text-slate-900">{truck.driver?.name || 'Staff Driver'}</span>
                       </div>
 
-                      <div className="flex items-center justify-between text-slate-300">
+                      <div className="flex items-center justify-between text-slate-600">
                         <span className="flex items-center gap-1.5 text-slate-500">
-                          <Gauge className="w-3.5 h-3.5 text-sky-400" /> Mileage
+                          <Gauge className="w-3.5 h-3.5 text-teal-600" /> Mileage
                         </span>
-                        <span className="font-mono text-slate-200">{truck.baseMileageKmPerLitre} km/L</span>
+                        <span className="font-mono text-slate-700">{truck.baseMileageKmPerLitre} km/L</span>
                       </div>
 
-                      <div className="flex items-center justify-between text-slate-300">
+                      <div className="flex items-center justify-between text-slate-600">
                         <span className="flex items-center gap-1.5 text-slate-500">
-                          <Fuel className="w-3.5 h-3.5 text-amber-400" /> Fuel Level
+                          <Fuel className="w-3.5 h-3.5 text-amber-600" /> Fuel Level
                         </span>
-                        <span className="font-bold text-amber-400">
+                        <span className="font-bold text-amber-700">
                           {telemetry.fuelPercent !== undefined ? `${telemetry.fuelPercent}%` : `${truck.fuelCapacityLitres}L`}
                         </span>
                       </div>
                     </div>
 
                     {/* Utilization Meters */}
-                    <div className="mt-4 pt-3 border-t border-slate-800 space-y-2.5 text-xs">
+                    <div className="mt-4 pt-3 border-t border-slate-100 space-y-2.5 text-xs">
                       <div>
-                        <div className="flex justify-between text-slate-400 mb-1">
+                        <div className="flex justify-between text-slate-500 mb-1">
                           <span>Weight Load</span>
-                          <strong className="text-white font-mono">{loadWeight} / {truck.maxWeightKg} kg ({weightPercent}%)</strong>
+                          <strong className="text-slate-900 font-mono">{loadWeight} / {truck.maxWeightKg} kg ({weightPercent}%)</strong>
                         </div>
-                        <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                        <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
                           <div
                             className={`h-1.5 rounded-full ${
-                              weightPercent > 90 ? 'bg-amber-400' : 'bg-indigo-500'
+                              weightPercent > 90 ? 'bg-amber-500' : 'bg-indigo-600'
                             }`}
                             style={{ width: `${weightPercent}%` }}
                           />
@@ -162,14 +162,14 @@ export default function FleetPage() {
                       </div>
 
                       <div>
-                        <div className="flex justify-between text-slate-400 mb-1">
+                        <div className="flex justify-between text-slate-500 mb-1">
                           <span>Volume Load</span>
-                          <strong className="text-white font-mono">{loadVol} / {truck.maxVolumeM3} m³ ({volumePercent}%)</strong>
+                          <strong className="text-slate-900 font-mono">{loadVol} / {truck.maxVolumeM3} m³ ({volumePercent}%)</strong>
                         </div>
-                        <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                        <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
                           <div
                             className={`h-1.5 rounded-full ${
-                              volumePercent > 90 ? 'bg-amber-400' : 'bg-cyan-400'
+                              volumePercent > 90 ? 'bg-amber-500' : 'bg-teal-500'
                             }`}
                             style={{ width: `${volumePercent}%` }}
                           />
@@ -178,7 +178,7 @@ export default function FleetPage() {
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] text-slate-400 flex justify-between font-mono">
+                  <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500 flex justify-between font-mono">
                     <span>Stops: {assignedTrip?.routeWaypoints?.length || 0}</span>
                     <span>Loop: {assignedTrip?.totalDistanceKm || 0} km</span>
                   </div>

@@ -69,7 +69,7 @@ export default function AnalyticsPage() {
   const completedDeliveries = orders.filter(o => o.status === 'delivered').length;
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-[#080C14] text-slate-100">
+    <div className="flex-1 flex flex-col min-h-screen bg-[#F8FAFC] text-slate-900">
       <Topbar
         title="Fleet Analytics & Environmental Impact"
         subtitle="Algorithmic efficiency benchmarks, fuel reduction telemetry, and sustainability indicators"
@@ -111,65 +111,65 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Technical Algorithmic Insights Card (Academic OR Verification) */}
-        <div className="bg-[#0C1322] rounded-2xl border border-slate-800 p-6 shadow-xl">
-          <div className="flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2">
+        <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs">
+          <div className="flex items-center gap-2 text-indigo-600 text-xs font-bold uppercase tracking-wider mb-2">
             <Cpu className="w-4 h-4" /> Academic & Operations Research Verification
           </div>
-          <h3 className="text-lg font-black text-white tracking-tight">
+          <h3 className="text-lg font-black text-slate-900 tracking-tight">
             Capacitated Vehicle Routing Problem (CVRP) Complexity Analysis
           </h3>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Mathematical properties evaluated during the simulated annealing convergence
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
-            <div className="p-4 rounded-xl bg-[#080E1A] border border-slate-800">
-              <div className="font-bold text-white text-sm">N x N Distance Matrix</div>
-              <p className="text-xs text-slate-400 mt-1">
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+              <div className="font-bold text-slate-900 text-sm">N x N Distance Matrix</div>
+              <p className="text-xs text-slate-500 mt-1">
                 Constructed via Haversine spherical formula ($R = 6371$ km).
               </p>
-              <div className="mt-4 pt-3 border-t border-slate-800 text-xs space-y-1.5">
+              <div className="mt-4 pt-3 border-t border-slate-200/70 text-xs space-y-1.5">
                 <div className="flex justify-between">
                   <span className="text-slate-500">Time Complexity:</span>
-                  <strong className="font-mono text-cyan-300">O(N²)</strong>
+                  <strong className="font-mono text-indigo-700">O(N²)</strong>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Lookup Cost:</span>
-                  <strong className="font-mono text-emerald-400">O(1) Memory</strong>
+                  <strong className="font-mono text-emerald-700">O(1) Memory</strong>
                 </div>
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#080E1A] border border-slate-800">
-              <div className="font-bold text-white text-sm">Multi-Constraint Bin Packing</div>
-              <p className="text-xs text-slate-400 mt-1">
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+              <div className="font-bold text-slate-900 text-sm">Multi-Constraint Bin Packing</div>
+              <p className="text-xs text-slate-500 mt-1">
                 Greedy Best-Fit Decreasing heuristic balancing volume and weight.
               </p>
-              <div className="mt-4 pt-3 border-t border-slate-800 text-xs space-y-1.5">
+              <div className="mt-4 pt-3 border-t border-slate-200/70 text-xs space-y-1.5">
                 <div className="flex justify-between">
                   <span className="text-slate-500">Sorting Cost:</span>
-                  <strong className="font-mono text-cyan-300">O(M log M)</strong>
+                  <strong className="font-mono text-indigo-700">O(M log M)</strong>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Allocation:</span>
-                  <strong className="font-mono text-emerald-400">O(M × K)</strong>
+                  <strong className="font-mono text-emerald-700">O(M × K)</strong>
                 </div>
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#080E1A] border border-slate-800">
-              <div className="font-bold text-white text-sm">Simulated Annealing</div>
-              <p className="text-xs text-slate-400 mt-1">
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+              <div className="font-bold text-slate-900 text-sm">Simulated Annealing</div>
+              <p className="text-xs text-slate-500 mt-1">
                 2-Opt inversions & Metropolis criterion $P = \exp(-\Delta E / T)$.
               </p>
-              <div className="mt-4 pt-3 border-t border-slate-800 text-xs space-y-1.5">
+              <div className="mt-4 pt-3 border-t border-slate-200/70 text-xs space-y-1.5">
                 <div className="flex justify-between">
                   <span className="text-slate-500">Cooling Rate:</span>
-                  <strong className="font-mono text-amber-400">α = 0.985</strong>
+                  <strong className="font-mono text-amber-700">α = 0.985</strong>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Convergence:</span>
-                  <strong className="font-mono text-emerald-400">&lt; 20 ms</strong>
+                  <strong className="font-mono text-emerald-700">&lt; 20 ms</strong>
                 </div>
               </div>
             </div>
@@ -177,12 +177,12 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Fleet Utilization Progress Bars */}
-        <div className="bg-[#0C1322] rounded-2xl border border-slate-800 p-6 shadow-xl">
+        <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs">
           <div className="flex items-center justify-between mb-1">
-            <h3 className="text-base font-black text-white tracking-tight">Fleet Vehicle Capacity Utilization</h3>
+            <h3 className="text-base font-black text-slate-900 tracking-tight">Fleet Vehicle Capacity Utilization</h3>
             <span className="text-xs font-mono text-slate-400">Gravimetric vs Volumetric Balance</span>
           </div>
-          <p className="text-xs text-slate-400 mb-6">
+          <p className="text-xs text-slate-500 mb-6">
             Volumetric (m³) and gravimetric (kg) payload distributions per dispatched vehicle
           </p>
 
@@ -195,42 +195,42 @@ export default function AnalyticsPage() {
               const volPct = Math.min(100, Math.round((volume / truck.maxVolumeM3) * 100));
 
               return (
-                <div key={truck.truckId || truck.id} className="space-y-2 text-xs bg-[#080E1A] p-4 rounded-xl border border-slate-800">
+                <div key={truck.truckId || truck.id} className="space-y-2 text-xs bg-slate-50 p-4 rounded-xl border border-slate-200/70">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div className="font-bold text-white flex items-center gap-2">
+                    <div className="font-bold text-slate-900 flex items-center gap-2">
                       <span className="text-sm">{truck.name}</span>
-                      <span className="text-[10px] text-cyan-400 font-mono px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30">
+                      <span className="text-[10px] text-indigo-700 font-mono px-2 py-0.5 rounded bg-indigo-50 border border-indigo-200/80">
                         {truck.type.toUpperCase()}
                       </span>
                     </div>
-                    <span className="text-slate-400 font-mono">
-                      Weight: <strong className="text-indigo-400">{weightPct}%</strong> ({weight}/{truck.maxWeightKg} kg) • Volume: <strong className="text-cyan-400">{volPct}%</strong> ({volume}/{truck.maxVolumeM3} m³)
+                    <span className="text-slate-500 font-mono">
+                      Weight: <strong className="text-indigo-700">{weightPct}%</strong> ({weight}/{truck.maxWeightKg} kg) • Volume: <strong className="text-teal-700">{volPct}%</strong> ({volume}/{truck.maxVolumeM3} m³)
                     </span>
                   </div>
 
                   {/* Dual Bar: Weight & Volume */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                     <div>
-                      <div className="text-[10px] font-semibold text-slate-400 mb-1 flex justify-between">
+                      <div className="text-[10px] font-semibold text-slate-500 mb-1 flex justify-between">
                         <span>Payload Weight Fill</span>
-                        <span className="text-indigo-400">{weightPct}%</span>
+                        <span className="text-indigo-700 font-bold">{weightPct}%</span>
                       </div>
-                      <div className="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+                      <div className="w-full bg-slate-200/80 rounded-full h-2 overflow-hidden">
                         <div
-                          className="bg-gradient-to-r from-indigo-600 to-indigo-400 h-2 rounded-full transition-all duration-500"
+                          className="bg-indigo-600 h-2 rounded-full transition-all duration-500"
                           style={{ width: `${weightPct}%` }}
                         />
                       </div>
                     </div>
 
                     <div>
-                      <div className="text-[10px] font-semibold text-slate-400 mb-1 flex justify-between">
+                      <div className="text-[10px] font-semibold text-slate-500 mb-1 flex justify-between">
                         <span>Payload Volume Fill</span>
-                        <span className="text-cyan-400">{volPct}%</span>
+                        <span className="text-teal-700 font-bold">{volPct}%</span>
                       </div>
-                      <div className="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+                      <div className="w-full bg-slate-200/80 rounded-full h-2 overflow-hidden">
                         <div
-                          className="bg-gradient-to-r from-cyan-500 to-teal-400 h-2 rounded-full transition-all duration-500"
+                          className="bg-teal-600 h-2 rounded-full transition-all duration-500"
                           style={{ width: `${volPct}%` }}
                         />
                       </div>

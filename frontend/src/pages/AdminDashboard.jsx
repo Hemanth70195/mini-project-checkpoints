@@ -103,7 +103,7 @@ export default function AdminDashboard() {
   const improvementPercent = lastOptimizedData ? `${lastOptimizedData.improvementPercentage}%` : '28.6%';
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-[#080C14] text-slate-100">
+    <div className="flex-1 flex flex-col min-h-screen bg-[#F8FAFC] text-slate-900">
       <Topbar
         title="Fleet Command Center"
         subtitle="Real-time multi-truck telematics, CVRP scheduling, and simulated annealing optimization"
@@ -113,7 +113,7 @@ export default function AdminDashboard() {
           <button
             onClick={handleQuickOptimize}
             disabled={optimizing}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition-all cursor-pointer disabled:opacity-70"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-md shadow-indigo-600/20 transition-all cursor-pointer disabled:opacity-70"
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-300" />
             <span>{optimizing ? 'Optimizing Fleet...' : 'Quick Optimize'}</span>
@@ -173,18 +173,18 @@ export default function AdminDashboard() {
         {/* Hero Section: Large Fleet Routing Map & Prominent Truck Visualizer */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Main Leaflet Map Viewer (7 Cols) */}
-          <div className="lg:col-span-7 bg-[#0C1322] rounded-2xl border border-slate-800 p-5 shadow-xl flex flex-col">
+          <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs flex flex-col">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-extrabold text-white text-sm tracking-tight">Geospatial Fleet Routing & Telemetry</h3>
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <h3 className="font-extrabold text-slate-900 text-sm tracking-tight">Geospatial Fleet Routing & Telemetry</h3>
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 </div>
-                <p className="text-xs text-slate-400 mt-0.5">Live GPS truck positions, waypoints, and CVRP closed-loop routes</p>
+                <p className="text-xs text-slate-500 mt-0.5">Live GPS truck positions, waypoints, and CVRP closed-loop routes</p>
               </div>
               <Link
                 to="/admin/tracking"
-                className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 transition-colors"
+                className="text-xs font-bold text-indigo-600 hover:text-indigo-700 flex items-center gap-1.5 transition-colors"
               >
                 <span>Live Radar</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -203,19 +203,19 @@ export default function AdminDashboard() {
             </div>
 
             {/* Map Legend Footer */}
-            <div className="mt-4 pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between text-xs text-slate-400 gap-2">
+            <div className="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-2">
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-sm bg-amber-400" /> Depot (Yeshwanthpur)
+                  <span className="w-2.5 h-2.5 rounded-sm bg-amber-500" /> Depot (Yeshwanthpur)
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-cyan-400" /> Active Waypoint
+                  <span className="w-2.5 h-2.5 rounded-full bg-indigo-600" /> Active Waypoint
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" /> Delivered
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" /> Delivered
                 </span>
               </div>
-              <span className="text-[11px] font-mono text-slate-500">CartoDB Dark Matter / OSM</span>
+              <span className="text-[11px] font-mono text-slate-400">OpenStreetMap / Standard Fleet Layer</span>
             </div>
           </div>
 
@@ -230,7 +230,7 @@ export default function AdminDashboard() {
             />
 
             {/* Algorithm Efficiency Callout Card */}
-            <div className="bg-gradient-to-br from-indigo-950/60 via-[#0C1322] to-slate-900/90 rounded-2xl p-5 border border-indigo-500/30 text-white shadow-xl relative overflow-hidden">
+            <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-5 border border-indigo-500/30 text-white shadow-md relative overflow-hidden">
               <div className="absolute right-0 top-0 translate-x-4 -translate-y-4 w-32 h-32 rounded-full bg-indigo-500/15 blur-2xl pointer-events-none" />
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-wider">
@@ -245,15 +245,15 @@ export default function AdminDashboard() {
                 Simulated Annealing Global Minima Solver
               </h4>
               <p className="text-xs text-slate-300 mt-1.5 leading-relaxed">
-                Escapes local optima using geometric cooling ($T_{k+1} = \alpha \cdot T_k$) and stochastic 2-Opt segment inversions over geodesic Haversine distance graphs.
+                Escapes local optima using geometric cooling (T_(k+1) = α · T_k) and stochastic 2-Opt segment inversions over geodesic Haversine distance graphs.
               </p>
 
               <div className="mt-4 pt-3 border-t border-slate-800/80 grid grid-cols-2 gap-3 text-xs">
-                <div className="bg-[#080E1A] p-2.5 rounded-xl border border-slate-800">
+                <div className="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
                   <div className="text-slate-400 text-[10px] uppercase font-bold">Complexity</div>
                   <strong className="text-cyan-300 font-mono">O(Iter × N)</strong>
                 </div>
-                <div className="bg-[#080E1A] p-2.5 rounded-xl border border-slate-800">
+                <div className="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
                   <div className="text-slate-400 text-[10px] uppercase font-bold">Measured Gain</div>
                   <strong className="text-emerald-400 font-mono">{improvementPercent} Reduction</strong>
                 </div>
@@ -273,15 +273,15 @@ export default function AdminDashboard() {
         {/* Fleet Status Distribution & Mini-List */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left 2 Cols: Recent Consignments Preview Table */}
-          <div className="lg:col-span-2 bg-[#0C1322] rounded-2xl border border-slate-800 p-5 shadow-xl">
+          <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="font-bold text-white text-sm">Recent Delivery Consignments</h3>
-                <p className="text-xs text-slate-400 mt-0.5">Multi-category orders scheduled across the Bengaluru logistics corridor</p>
+                <h3 className="font-bold text-slate-900 text-sm">Recent Delivery Consignments</h3>
+                <p className="text-xs text-slate-500 mt-0.5">Multi-category orders scheduled across the Bengaluru logistics corridor</p>
               </div>
               <Link
                 to="/admin/deliveries"
-                className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
+                className="text-xs font-bold text-indigo-600 hover:text-indigo-700 flex items-center gap-1 transition-colors"
               >
                 <span>Full Manager</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -291,7 +291,7 @@ export default function AdminDashboard() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-[#080E1A]/80 border-b border-slate-800 text-slate-400 font-bold uppercase tracking-wider">
+                  <tr className="bg-slate-50 border-b border-slate-200/80 text-slate-500 font-bold uppercase tracking-wider">
                     <th className="py-3 px-3">Order ID</th>
                     <th className="py-3 px-3">Customer</th>
                     <th className="py-3 px-3">Payload</th>
@@ -301,28 +301,28 @@ export default function AdminDashboard() {
                     <th className="py-3 px-3">Truck</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/80">
+                <tbody className="divide-y divide-slate-100">
                   {orders.slice(0, 5).map((order) => (
-                    <tr key={order.orderId || order.id} className="hover:bg-[#111B2E]/60 transition-colors">
-                      <td className="py-3 px-3 font-mono font-bold text-cyan-400">
+                    <tr key={order.orderId || order.id} className="hover:bg-slate-50/70 transition-colors">
+                      <td className="py-3 px-3 font-mono font-bold text-indigo-600">
                         {order.orderId || order.id}
                       </td>
-                      <td className="py-3 px-3 font-semibold text-white">{order.customer}</td>
-                      <td className="py-3 px-3 text-slate-300 font-mono">{order.weightKg} kg / {order.volumeM3} m³</td>
-                      <td className="py-3 px-3 capitalize text-slate-300">{order.packageType?.replace('_', ' ')}</td>
+                      <td className="py-3 px-3 font-semibold text-slate-900">{order.customer}</td>
+                      <td className="py-3 px-3 text-slate-600 font-mono">{order.weightKg} kg / {order.volumeM3} m³</td>
+                      <td className="py-3 px-3 capitalize text-slate-600">{order.packageType?.replace('_', ' ')}</td>
                       <td className="py-3 px-3">
                         <StatusBadge status={order.priority} type="priority" />
                       </td>
                       <td className="py-3 px-3">
                         <StatusBadge status={order.status} />
                       </td>
-                      <td className="py-3 px-3 font-mono text-indigo-400">
+                      <td className="py-3 px-3 font-mono">
                         {order.assignedTruckId ? (
-                          <span className="text-cyan-300 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
+                          <span className="text-indigo-700 bg-indigo-50 border border-indigo-200/80 px-2 py-0.5 rounded font-semibold text-[11px]">
                             {order.assignedTruckId}
                           </span>
                         ) : (
-                          <span className="text-slate-500 italic">Unassigned</span>
+                          <span className="text-slate-400 italic">Unassigned</span>
                         )}
                       </td>
                     </tr>
@@ -333,10 +333,10 @@ export default function AdminDashboard() {
           </div>
 
           {/* Right 1 Col: Fleet Quick Status Cards */}
-          <div className="bg-[#0C1322] rounded-2xl border border-slate-800 p-5 shadow-xl flex flex-col">
+          <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs flex flex-col">
             <div className="flex items-center justify-between mb-3.5">
-              <h4 className="font-bold text-white text-sm">Active Fleet Radar</h4>
-              <Link to="/admin/fleet" className="text-xs font-bold text-cyan-400 hover:underline">
+              <h4 className="font-bold text-slate-900 text-sm">Active Fleet Radar</h4>
+              <Link to="/admin/fleet" className="text-xs font-bold text-indigo-600 hover:underline">
                 View Fleet Hub
               </Link>
             </div>
@@ -353,22 +353,22 @@ export default function AdminDashboard() {
                     onClick={() => setSelectedTruckId(truckId)}
                     className={`p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between text-xs ${
                       isSelected
-                        ? 'bg-indigo-950/40 border-indigo-500/60 shadow-md shadow-indigo-950/40'
-                        : 'bg-[#080E1A] border-slate-800/90 hover:border-slate-700'
+                        ? 'bg-indigo-50/80 border-indigo-400/80 shadow-xs'
+                        : 'bg-slate-50/70 border-slate-200/70 hover:border-slate-300 hover:bg-slate-50'
                     }`}
                   >
                     <div>
-                      <div className="font-bold text-white flex items-center gap-1.5">
+                      <div className="font-bold text-slate-900 flex items-center gap-1.5">
                         <span>{truck.name}</span>
-                        {isSelected && <span className="text-[10px] text-cyan-400 font-mono font-bold">• Active</span>}
+                        {isSelected && <span className="text-[10px] text-indigo-600 font-mono font-bold">• Active</span>}
                       </div>
-                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">
+                      <div className="text-[11px] text-slate-500 font-mono mt-0.5">
                         {truckId} • {truck.type.toUpperCase()}
                       </div>
                     </div>
                     <div className="text-right">
                       <StatusBadge status={telemetry.status || truck.status || 'idle'} />
-                      <div className="text-[10px] text-slate-400 font-mono mt-1">
+                      <div className="text-[10px] text-slate-500 font-mono mt-1">
                         {telemetry.speedKmh ? `${telemetry.speedKmh} km/h` : 'Stationary'}
                       </div>
                     </div>

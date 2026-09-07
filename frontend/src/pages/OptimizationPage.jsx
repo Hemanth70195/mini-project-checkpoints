@@ -110,7 +110,7 @@ export default function OptimizationPage() {
   const iterations = optimizationData?.iterations || 12000;
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-[#080C14] text-slate-100">
+    <div className="flex-1 flex flex-col min-h-screen bg-[#F8FAFC] text-slate-900">
       <Topbar
         title="AI Route Optimization Studio"
         subtitle="Operations Research: Capacitated Vehicle Routing (CVRP) + Simulated Annealing Global Minima Solver"
@@ -118,11 +118,11 @@ export default function OptimizationPage() {
 
       <main className="flex-1 p-6 sm:p-8 space-y-6 max-w-7xl w-full mx-auto">
         {/* Prominent Action Banner & Algorithmic Workflow */}
-        <div className="bg-gradient-to-br from-[#0D162B] via-[#091021] to-[#060B16] rounded-3xl p-6 sm:p-8 border border-indigo-500/30 text-white shadow-2xl relative overflow-hidden">
+        <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 sm:p-8 border border-indigo-500/30 text-white shadow-md relative overflow-hidden">
           <div className="absolute -right-10 -bottom-10 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
           <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
             <div className="space-y-3 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/15 text-cyan-300 text-xs font-bold border border-indigo-500/30">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-cyan-300 text-xs font-bold border border-indigo-500/30">
                 <Cpu className="w-3.5 h-3.5 text-cyan-400" /> Meta-Heuristic Dispatch Optimization Engine
               </div>
               <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
@@ -169,22 +169,22 @@ export default function OptimizationPage() {
 
           {/* Visual 4-Step Algorithmic Pipeline Diagram */}
           <div className="mt-6 pt-5 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
-            <div className="p-3 rounded-xl bg-[#080E1A] border border-slate-800">
+            <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800">
               <div className="text-[10px] font-mono text-slate-400 font-bold uppercase">Step 1</div>
               <div className="font-bold text-white mt-1">Initial Route</div>
               <p className="text-[11px] text-slate-400 mt-0.5">Clarke-Wright heuristic</p>
             </div>
-            <div className="p-3 rounded-xl bg-[#080E1A] border border-slate-800">
+            <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800">
               <div className="text-[10px] font-mono text-indigo-400 font-bold uppercase">Step 2</div>
               <div className="font-bold text-white mt-1">CVRP Allocation</div>
               <p className="text-[11px] text-slate-400 mt-0.5">Weight & volume bin-packing</p>
             </div>
-            <div className="p-3 rounded-xl bg-[#080E1A] border border-slate-800">
+            <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800">
               <div className="text-[10px] font-mono text-cyan-400 font-bold uppercase">Step 3</div>
               <div className="font-bold text-white mt-1">Simulated Annealing</div>
               <p className="text-[11px] text-slate-400 mt-0.5">Metropolis 2-Opt cooling</p>
             </div>
-            <div className="p-3 rounded-xl bg-[#080E1A] border border-emerald-500/30 bg-emerald-950/20">
+            <div className="p-3 rounded-xl bg-slate-950/70 border border-emerald-500/40 bg-emerald-950/30">
               <div className="text-[10px] font-mono text-emerald-400 font-bold uppercase">Step 4</div>
               <div className="font-bold text-emerald-300 mt-1">Optimized Route</div>
               <p className="text-[11px] text-slate-400 mt-0.5">Dispatched closed loops</p>
@@ -194,78 +194,78 @@ export default function OptimizationPage() {
 
         {/* Real Optimization Results Comparison HUD */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-[#0C1322] rounded-2xl p-5 border border-slate-800 shadow-md">
-            <div className="text-slate-400 text-xs font-bold uppercase tracking-wider">
+          <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs">
+            <div className="text-slate-500 text-xs font-bold uppercase tracking-wider">
               Before Optimization
             </div>
-            <div className="text-3xl font-black text-slate-300 mt-1.5 font-mono">{initialDistance} km</div>
-            <div className="text-xs text-slate-500 mt-1 font-medium">Clarke-Wright Baseline</div>
+            <div className="text-3xl font-black text-slate-800 mt-1.5 font-mono">{initialDistance} km</div>
+            <div className="text-xs text-slate-400 mt-1 font-medium">Clarke-Wright Baseline</div>
           </div>
 
-          <div className="bg-[#0C1322] rounded-2xl p-5 border border-indigo-500/40 shadow-md bg-indigo-950/20">
-            <div className="text-indigo-400 text-xs font-bold uppercase tracking-wider">
+          <div className="bg-indigo-50/50 rounded-2xl p-5 border border-indigo-200/80 shadow-xs">
+            <div className="text-indigo-600 text-xs font-bold uppercase tracking-wider">
               After Optimization
             </div>
-            <div className="text-3xl font-black text-indigo-300 mt-1.5 font-mono">{optimizedDistance} km</div>
-            <div className="text-xs text-slate-400 mt-1 font-medium">Simulated Annealing Global Min</div>
+            <div className="text-3xl font-black text-indigo-900 mt-1.5 font-mono">{optimizedDistance} km</div>
+            <div className="text-xs text-indigo-700/70 mt-1 font-medium">Simulated Annealing Global Min</div>
           </div>
 
-          <div className="bg-[#0C1322] rounded-2xl p-5 border border-emerald-500/40 shadow-md bg-emerald-950/20">
-            <div className="text-emerald-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+          <div className="bg-emerald-50/50 rounded-2xl p-5 border border-emerald-200/80 shadow-xs">
+            <div className="text-emerald-700 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
               <TrendingDown className="w-3.5 h-3.5" /> Distance Saved
             </div>
-            <div className="text-3xl font-black text-emerald-400 mt-1.5 font-mono">
+            <div className="text-3xl font-black text-emerald-800 mt-1.5 font-mono">
               {distanceSaved} km <span className="text-base font-bold">({improvementPercentage}%)</span>
             </div>
-            <div className="text-xs text-slate-400 mt-1 font-medium">Total Fleet Loop Reduction</div>
+            <div className="text-xs text-emerald-700/70 mt-1 font-medium">Total Fleet Loop Reduction</div>
           </div>
 
-          <div className="bg-[#0C1322] rounded-2xl p-5 border border-slate-800 shadow-md">
-            <div className="text-slate-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-cyan-400" /> Solver Telemetry
+          <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs">
+            <div className="text-slate-500 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 text-indigo-600" /> Solver Telemetry
             </div>
-            <div className="text-3xl font-black text-white mt-1.5 font-mono">{executionTimeMs} ms</div>
-            <div className="text-xs text-slate-400 mt-1 font-medium">{iterations} Stochastic Steps</div>
+            <div className="text-3xl font-black text-slate-900 mt-1.5 font-mono">{executionTimeMs} ms</div>
+            <div className="text-xs text-slate-500 mt-1 font-medium">{iterations} Stochastic Steps</div>
           </div>
         </div>
 
         {/* Environmental & Operating Cost Impact Card */}
-        <div className="bg-[#0C1322] rounded-2xl p-5 border border-slate-800 shadow-md">
-          <h3 className="text-sm font-bold text-white mb-3.5 flex items-center gap-2">
-            <Zap className="w-4 h-4 text-amber-400" /> Operational Efficiency & Sustainability Dividends
+        <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs">
+          <h3 className="text-sm font-bold text-slate-900 mb-3.5 flex items-center gap-2">
+            <Zap className="w-4 h-4 text-amber-500" /> Operational Efficiency & Sustainability Dividends
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="flex items-center gap-3.5 p-3.5 rounded-xl bg-[#080E1A] border border-amber-500/30">
-              <div className="p-3 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            <div className="flex items-center gap-3.5 p-3.5 rounded-xl bg-amber-50/60 border border-amber-200/80">
+              <div className="p-3 rounded-xl bg-amber-500/10 text-amber-600 border border-amber-500/20">
                 <Fuel className="w-5 h-5" />
               </div>
               <div>
-                <div className="text-xs text-slate-400 font-semibold">Diesel Fuel Saved</div>
-                <div className="text-xl font-black text-amber-300 mt-0.5">
+                <div className="text-xs text-slate-500 font-semibold">Diesel Fuel Saved</div>
+                <div className="text-xl font-black text-amber-900 mt-0.5">
                   {((distanceSaved / 8.5) || 6.7).toFixed(1)} Litres
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3.5 p-3.5 rounded-xl bg-[#080E1A] border border-emerald-500/30">
-              <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <div className="flex items-center gap-3.5 p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-200/80">
+              <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
                 <IndianRupee className="w-5 h-5" />
               </div>
               <div>
-                <div className="text-xs text-slate-400 font-semibold">Direct Cost Saved</div>
-                <div className="text-xl font-black text-emerald-400 mt-0.5">
+                <div className="text-xs text-slate-500 font-semibold">Direct Cost Saved</div>
+                <div className="text-xl font-black text-emerald-900 mt-0.5">
                   ₹{Math.round(((distanceSaved / 8.5) || 6.7) * 92)}
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3.5 p-3.5 rounded-xl bg-[#080E1A] border border-cyan-500/30">
-              <div className="p-3 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+            <div className="flex items-center gap-3.5 p-3.5 rounded-xl bg-teal-50/60 border border-teal-200/80">
+              <div className="p-3 rounded-xl bg-teal-500/10 text-teal-600 border border-teal-500/20">
                 <Leaf className="w-5 h-5" />
               </div>
               <div>
-                <div className="text-xs text-slate-400 font-semibold">Carbon Abated</div>
-                <div className="text-xl font-black text-cyan-300 mt-0.5">
+                <div className="text-xs text-slate-500 font-semibold">Carbon Abated</div>
+                <div className="text-xl font-black text-teal-900 mt-0.5">
                   {(((distanceSaved / 8.5) || 6.7) * 2.68).toFixed(1)} kg CO₂
                 </div>
               </div>
@@ -276,18 +276,18 @@ export default function OptimizationPage() {
         {/* Optimized Routes Visualizer (Map + Route Cards) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Map Viewer (7 Cols) */}
-          <div className="lg:col-span-7 bg-[#0C1322] rounded-2xl border border-slate-800 p-5 shadow-xl flex flex-col">
+          <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs flex flex-col">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-sm font-bold text-white">Optimized Closed-Loop Polylines</h3>
-                <p className="text-xs text-slate-400 mt-0.5">
+                <h3 className="text-sm font-bold text-slate-900">Optimized Closed-Loop Polylines</h3>
+                <p className="text-xs text-slate-500 mt-0.5">
                   Depot-to-customer sequence color-coded per dispatched vehicle
                 </p>
               </div>
               {selectedTruckId && (
                 <button
                   onClick={() => setSelectedTruckId(null)}
-                  className="text-xs text-cyan-400 font-bold hover:underline cursor-pointer"
+                  className="text-xs text-indigo-600 font-bold hover:underline cursor-pointer"
                 >
                   Clear Filter
                 </button>
@@ -308,8 +308,8 @@ export default function OptimizationPage() {
           {/* Route Stop Cards (5 Cols) */}
           <div className="lg:col-span-5 space-y-4 flex flex-col">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-white">Dispatched Vehicle Loops</h3>
-              <span className="text-xs px-2.5 py-1 rounded-full bg-[#111B2E] text-cyan-300 font-bold border border-slate-800">
+              <h3 className="text-sm font-bold text-slate-900">Dispatched Vehicle Loops</h3>
+              <span className="text-xs px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 font-bold border border-indigo-200/80">
                 {trips.length} Active Routes
               </span>
             </div>

@@ -1,0 +1,33 @@
+{
+  "name": "ai-multi-truck-optimizer-backend",
+  "version": "1.0.0",
+  "description": "AI-Based Multi-Truck Smart Delivery and Route Optimization System",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/algorithms.test.js",
+    "test:api": "node --test tests/api.test.js",
+    "test:sockets": "node --test tests/sockets.test.js",
+    "test:all": "node --test tests/algorithms.test.js tests/api.test.js tests/sockets.test.js",
+    "demo": "node tests/runDemo.js"
+  },
+  "keywords": [
+    "cvrp",
+    "simulated-annealing",
+    "route-optimization",
+    "logistics",
+    "fleet-management",
+    "socket-io"
+  ],
+  "author": "Logistics Team",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1"
+  }
+}
